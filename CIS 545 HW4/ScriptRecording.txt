@@ -1,0 +1,42 @@
+Script started on Sun Apr  6 16:44:18 2025
+[1m[7m%[27m[1m[0m                                                                                                                                  ]7;file://Shreys-Laptop.local/Users/shreypatel/desktop/Shreyansh_patel_h4[0m[27m[24m[Jshreypatel@Shreys-Laptop Shreyansh_patel_h4 % [K[?2004hcd desktop[10D/Users/shreypatel/Desktop/pipeflow ; exit;[42D.[24P[10C                               [32D[10Dgcc pipeflow.c -o pipeflow[26D./pipeflow                [16D[10Dgcc pipeflow.c -o pipeflow[26D./pipeflow                [16D[10Dgcc pipeflow.c -o pipeflow[?2004l
+[1m[7m%[27m[1m[0m                                                                                                                                  ]7;file://Shreys-Laptop.local/Users/shreypatel/desktop/Shreyansh_patel_h4[0m[27m[24m[Jshreypatel@Shreys-Laptop Shreyansh_patel_h4 % [K[?2004hgcc pipeflow.c -o pipeflow[26Dcd desktop                [16D[10D/Users/shreypatel/Desktop/pipeflow ; exit;[42D.[24P[10C                               [32D[?2004l
+[16:44:36] A sent to B: 'D0'
+[16:44:36] B sent to D: 'D0'
+[16:44:36] D received: 'D0'
+[16:44:37] A sent to B: 'D1'
+[16:44:37] A sent to B: 'D2'
+[16:44:37] B sent to D: 'D1'
+[16:44:38] A sent to B: 'D3'
+[16:44:38] A sent to B: 'C4'
+[16:44:38] B sent to D: 'D2'
+[16:44:38] A sent to B: 'D5'
+[16:44:39] A sent to B: 'D6'
+[16:44:39] A sent to B: 'D7'
+[16:44:39] B sent to D: 'D3'
+[16:44:40] A sent to B: 'D8'
+[16:44:40] A sent to B: 'C9'
+[16:44:40] B sent to C: 'C4'
+[16:44:40] C received: 'C4'
+[16:44:41] D received: 'D1'
+[16:44:41] B sent to D: 'D5'
+[16:44:42] B sent to D: 'D6'
+[16:44:43] B sent to D: 'D7'
+[16:44:44] B sent to D: 'D8'
+[16:44:45] B sent to C: 'C9'
+[16:44:45] C received: 'C9'
+[16:44:46] D received: 'D2'
+[16:44:51] D received: 'D3'
+[16:44:56] D received: 'D5'
+[16:45:01] D received: 'D6'
+[16:45:06] D received: 'D7'
+[16:45:11] D received: 'D8'
+Process execution completed successfully.
+[1m[7m%[27m[1m[0m                                                                                                                                  ]7;file://Shreys-Laptop.local/Users/shreypatel/desktop/Shreyansh_patel_h4[0m[27m[24m[Jshreypatel@Shreys-Laptop Shreyansh_patel_h4 % [K[?2004heexit[?2004l
+
+Saving session...
+...copying shared history...
+...saving history...truncating history files...
+...completed.
+
+Script done on Sun Apr  6 16:45:15 2025

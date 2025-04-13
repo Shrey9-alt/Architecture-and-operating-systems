@@ -1,0 +1,29 @@
+
+1. Analysis of Order and Timing in Log Display
+The log output demonstrates correct inter-process communication (IPC) with the following key characteristics:
+ Process A (Generator):
+    -> Generates 10 records (e.g., 'D0', 'C4') with random C/D prefixes.
+    -> Sends each record to Process B with a ~400ms delay between transmissions.
+    -> Logs each send with the format: [HH:MM:SS] A sent to B: '[record]'.
+ Process B (Router):
+    -> Routes records to Process C (if the record starts with C) or Process D (if it starts with D).
+    -> Waits 1 second after each routing operation (e.g., [16:44:36] B sent to D: 'D0' -> next B log at [16:44:37]).
+ Process C (Receiver):
+    -> Logs received messages immediately (no delay), e.g., [16:44:40] C received: 'C4'.
+ Process D (Receiver):
+    -> Logs received messages and waits 5 seconds before processing the next:
+        -> Example: [16:44:36] D received: 'D0' -> next log at [16:44:41] (strict 5s gap).
+        -> Subsequent D logs maintain exact 5-second intervals, proving the delay is enforced.
+
+2. Evidence of Independent Process Execution
+The log provides clear proof of independent (parallel) process execution:
+1. Concurrent Operation:
+    -> Process A continues sending records while B, C, and D process them (e.g., A sends 'D5' at [16:44:38] while D is still handling 'D1').
+    -> Process C and D run simultaneously (e.g., C logs 'C4' while D processes 'D1').
+2. Distinct Delays:
+    -> Process Bs 1-second delay and Process Ds 5-second delay operate independently, visible in the log timestamps.
+3. Non-Blocking Behavior:
+    -> Process Ds 5-second wait does not block Process C from logging (e.g., C4 and C9 are logged while D sleeps).
+
+Conclusion:
+The log confirms true parallelismeach process adheres to its timing constraints without blocking others, satisfying the assignments requirement for independent execution.

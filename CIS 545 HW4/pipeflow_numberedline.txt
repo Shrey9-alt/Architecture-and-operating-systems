@@ -1,0 +1,181 @@
+     1	#include <stdio.h>
+     2	#include <stdlib.h>
+     3	#include <unistd.h>
+     4	#include <string.h>
+     5	#include <time.h>
+     6	#include <sys/types.h>
+     7	#include <sys/wait.h>
+     8	#include <signal.h>
+     9	
+    10	#define RECORD_SIZE 3       // Format: 'C'/'D' + digit + null terminator
+    11	#define RECORD_COUNT 10     // Number of records to generate
+    12	#define LOG_LIMIT 30        // Total log messages expected
+    13	#define LOG_MSG_SIZE 100    // Buffer size for log messages
+    14	#define TIMESTAMP_SIZE 20   // Buffer size for timestamp
+    15	
+    16	typedef struct {
+    17	    int a_to_b[2];  
+    18	    int b_to_c[2];   
+    19	    int b_to_d[2];   
+    20	    int log_pipe[2]; 
+    21	} Pipeline;
+    22	
+    23	void generate_timestamp(char *buffer) {
+    24	    time_t now = time(NULL);
+    25	    struct tm *timeinfo = localtime(&now);
+    26	    strftime(buffer, TIMESTAMP_SIZE, "[%H:%M:%S]", timeinfo);
+    27	}
+    28	
+    29	void process_A(Pipeline *pipes) {
+    30	    close(pipes->a_to_b[0]);
+    31	    close(pipes->log_pipe[0]);
+    32	
+    33	    srand(time(NULL) ^ getpid());
+    34	    for (int i = 0; i < RECORD_COUNT; i++) {
+    35	        char record[RECORD_SIZE];
+    36	        record[0] = (rand() % 2) ? 'C' : 'D';
+    37	        record[1] = '0' + i;
+    38	        record[2] = '\0';
+    39	
+    40	        write(pipes->a_to_b[1], record, sizeof(record));
+    41	
+    42	        char timestamp[TIMESTAMP_SIZE];
+    43	        char log_msg[LOG_MSG_SIZE];
+    44	        generate_timestamp(timestamp);
+    45	        snprintf(log_msg, sizeof(log_msg), "%s A sent to B: '%s'\n", timestamp, record);
+    46	        write(pipes->log_pipe[1], log_msg, strlen(log_msg));
+    47	
+    48	        usleep(400000); // 400ms delay as specified
+    49	    }
+    50	
+    51	    close(pipes->a_to_b[1]);
+    52	    close(pipes->log_pipe[1]);
+    53	    exit(0);
+    54	}
+    55	
+    56	void process_B(Pipeline *pipes) {
+    57	    close(pipes->a_to_b[1]);
+    58	    close(pipes->b_to_c[0]);
+    59	    close(pipes->b_to_d[0]);
+    60	    close(pipes->log_pipe[0]);
+    61	
+    62	    char record[RECORD_SIZE];
+    63	    for (int i = 0; i < RECORD_COUNT; i++) {
+    64	        read(pipes->a_to_b[0], record, sizeof(record));
+    65	
+    66	        char timestamp[TIMESTAMP_SIZE];
+    67	        char log_msg[LOG_MSG_SIZE];
+    68	        generate_timestamp(timestamp);
+    69	
+    70	        if (record[0] == 'C') {
+    71	            write(pipes->b_to_c[1], record, sizeof(record));
+    72	            snprintf(log_msg, sizeof(log_msg), "%s B sent to C: '%s'\n", timestamp, record);
+    73	        } else {
+    74	            write(pipes->b_to_d[1], record, sizeof(record));
+    75	            snprintf(log_msg, sizeof(log_msg), "%s B sent to D: '%s'\n", timestamp, record);
+    76	        }
+    77	
+    78	        write(pipes->log_pipe[1], log_msg, strlen(log_msg));
+    79	        sleep(1); // Strict 1-second delay
+    80	    }
+    81	
+    82	    close(pipes->a_to_b[0]);
+    83	    close(pipes->b_to_c[1]);
+    84	    close(pipes->b_to_d[1]);
+    85	    close(pipes->log_pipe[1]);
+    86	    exit(0);
+    87	}
+    88	
+    89	void process_C(Pipeline *pipes) {
+    90	    close(pipes->b_to_c[1]);
+    91	    close(pipes->log_pipe[0]);
+    92	
+    93	    char record[RECORD_SIZE];
+    94	    while (read(pipes->b_to_c[0], record, sizeof(record)) > 0) {
+    95	        char timestamp[TIMESTAMP_SIZE];
+    96	        char log_msg[LOG_MSG_SIZE];
+    97	        generate_timestamp(timestamp);
+    98	        snprintf(log_msg, sizeof(log_msg), "%s C received: '%s'\n", timestamp, record);
+    99	        write(pipes->log_pipe[1], log_msg, strlen(log_msg));
+   100	    }
+   101	
+   102	    close(pipes->b_to_c[0]);
+   103	    close(pipes->log_pipe[1]);
+   104	    exit(0);
+   105	}
+   106	
+   107	void process_D(Pipeline *pipes) {
+   108	    close(pipes->b_to_d[1]);
+   109	    close(pipes->log_pipe[0]);
+   110	
+   111	    char record[RECORD_SIZE];
+   112	    while (read(pipes->b_to_d[0], record, sizeof(record)) > 0) {
+   113	        char timestamp[TIMESTAMP_SIZE];
+   114	        char log_msg[LOG_MSG_SIZE];
+   115	        generate_timestamp(timestamp);
+   116	        snprintf(log_msg, sizeof(log_msg), "%s D received: '%s'\n", timestamp, record);
+   117	        write(pipes->log_pipe[1], log_msg, strlen(log_msg));
+   118	        
+   119	        sleep(5); // Strict 5-second delay
+   120	    }
+   121	
+   122	    close(pipes->b_to_d[0]);
+   123	    close(pipes->log_pipe[1]);
+   124	    exit(0);
+   125	}
+   126	
+   127	void logger(Pipeline *pipes, pid_t child_pids[]) {
+   128	    close(pipes->log_pipe[1]);
+   129	
+   130	    char buffer[256];
+   131	    int logs_received = 0;
+   132	
+   133	    while (logs_received < LOG_LIMIT) {
+   134	        int bytes_read = read(pipes->log_pipe[0], buffer, sizeof(buffer) - 1);
+   135	        if (bytes_read > 0) {
+   136	            buffer[bytes_read] = '\0';
+   137	            printf("%s", buffer);
+   138	            fflush(stdout);
+   139	
+   140	            for (int i = 0; i < bytes_read; i++) {
+   141	                if (buffer[i] == '\n') logs_received++;
+   142	            }
+   143	        }
+   144	    }
+   145	
+   146	    for (int i = 0; i < 4; i++) {
+   147	        kill(child_pids[i], SIGTERM);
+   148	    }
+   149	
+   150	    close(pipes->log_pipe[0]);
+   151	}
+   152	
+   153	int main() {
+   154	    Pipeline pipes;
+   155	    pid_t child_pids[4];
+   156	
+   157	    if (pipe(pipes.a_to_b) == -1 || pipe(pipes.b_to_c) == -1 || 
+   158	        pipe(pipes.b_to_d) == -1 || pipe(pipes.log_pipe) == -1) {
+   159	        perror("Pipe creation failed");
+   160	        exit(EXIT_FAILURE);
+   161	    }
+   162	
+   163	    if ((child_pids[0] = fork()) == 0) process_A(&pipes);
+   164	    if ((child_pids[1] = fork()) == 0) process_B(&pipes);
+   165	    if ((child_pids[2] = fork()) == 0) process_C(&pipes);
+   166	    if ((child_pids[3] = fork()) == 0) process_D(&pipes);
+   167	
+   168	    close(pipes.a_to_b[0]); close(pipes.a_to_b[1]);
+   169	    close(pipes.b_to_c[0]); close(pipes.b_to_c[1]);
+   170	    close(pipes.b_to_d[0]); close(pipes.b_to_d[1]);
+   171	    close(pipes.log_pipe[1]);
+   172	
+   173	    logger(&pipes, child_pids);
+   174	
+   175	    for (int i = 0; i < 4; i++) {
+   176	        waitpid(child_pids[i], NULL, 0);
+   177	    }
+   178	
+   179	    printf("Process execution completed successfully.\n");
+   180	    return 0;
+   181	}
