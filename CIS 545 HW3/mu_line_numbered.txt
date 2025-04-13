@@ -1,0 +1,89 @@
+     1	#!/bin/csh
+     2	
+     3	echo "Written by Shreyansh Patel"
+     4	
+     5	# Check if any arguments are provided
+     6	if ($#argv == 0) then
+     7	    echo "Usage: mu.s -f <string> <filename> | -r <side1> <side2> <side3> | -c <filename(s)>"
+     8	    exit 1
+     9	endif
+    10	
+    11	# Start processing arguments
+    12	set i = 1
+    13	while ($i <= $#argv)
+    14	    set flag = "$argv[$i]"
+    15	
+    16	    switch ($flag)
+    17	
+    18	        # -f flag for findtext.s
+    19	        case "-f":
+    20	            if ($i + 2 <= $#argv) then
+    21	                @ i++
+    22	                set searchString = "$argv[$i]"
+    23	                @ i++
+    24	                set fileName = "$argv[$i]"
+    25	                echo "Running findtext.s with '$searchString' in '$fileName'"
+    26	                if (-e "$fileName") then
+    27	                    ./findtext.s "$searchString" "$fileName"
+    28	                else
+    29	                    echo "Error: File '$fileName' not found"
+    30	                endif
+    31	            else
+    32	                echo "Error: Invalid parameters for -f. Provide a string and a filename."
+    33	            endif
+    34	            @ i++
+    35	            echo "---"
+    36	            breaksw
+    37	
+    38	        # -r flag for right.s   
+    39	        case "-r":
+    40	            if ($i + 3 <= $#argv) then
+    41	                @ i++
+    42	                set side1 = "$argv[$i]"
+    43	                @ i++
+    44	                set side2 = "$argv[$i]"   
+    45	                @ i++
+    46	                set side3 = "$argv[$i]" 
+    47	                echo "Running right.s with sides $side1 $side2 $side3"
+    48	                ./right.s "$side1" "$side2" "$side3"
+    49	            else
+    50	                echo "Error: Invalid parameters for -r. Provide three numbers."
+    51	            endif
+    52	            @ i++
+    53	            echo "---"
+    54	            breaksw
+    55	
+    56	        # -c flag for count.s
+    57	        case "-c":
+    58	            @ i++
+    59	            while ($i <= $#argv)
+    60	                set fileName = "$argv[$i]"
+    61	                echo "Running count.s on '$fileName'"
+    62	                if (-e "$fileName") then
+    63	                    ./count.s "$fileName"
+    64	                else
+    65	                    echo "Error: File '$fileName' not found"
+    66	                endif
+    67	                @ i++
+    68	                echo "---"
+    69	                if ($i <= $#argv && "$argv[$i]" =~ -*) then
+    70	                    break
+    71	                endif
+    72	            end  
+    73	            breaksw
+    74	
+    75	        # Handle invalid flags
+    76	        default:
+    77	            echo "Error: Invalid argument - '$flag'"
+    78	            @ i++
+    79	            if ($i <= $#argv) then
+    80	                echo "Error: Invalid parameter - '$argv[$i]'"
+    81	                @ i++
+    82	            endif
+    83	            if ($i <= $#argv) then
+    84	                echo "Error: Invalid parameter - '$argv[$i]'"
+    85	                @ i++
+    86	            endif
+    87	            echo "---"
+    88	    endsw
+    89	end

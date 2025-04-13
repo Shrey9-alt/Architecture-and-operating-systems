@@ -1,0 +1,74 @@
+Script started on Sun Mar 23 22:47:55 2025
+Restored session: Sun Mar 23 22:47:01 EDT 2025
+[1m[7m%[27m[1m[0m                                                                                                                                       ]7;file://Shreys-Laptop.local/Users/shreypatel/desktop/shreyansh_patel_h3[0m[27m[24m[Jshreypatel@Shreys-Laptop shreyansh_patel_h3 % [K[?2004hexit./right.s 3 7 23[14Dcoun[4C*.s   [13D ./right.s 4 3 5[16D./findtext.s .s tempfile[24Dcat[12P[9C            [12D[12Dls -l >tempfile[?2004l
+[1m[7m%[27m[1m[0m                                                                                                                                       ]7;file://Shreys-Laptop.local/Users/shreypatel/desktop/shreyansh_patel_h3[0m[27m[24m[Jshreypatel@Shreys-Laptop shreyansh_patel_h3 % [K[?2004hls -l >tempfile[15Dexit           [11D./right.s 3 7 23[14Dcoun[4C*.s   [13D ./right.s 4 3 5[16D./findtext.s .s tempfile[24Dcat[12P[9C            [12D[12Dls -l >tempfile[15Dcat tempfile   [?2004l
+total 96
+-rwxr-xr-x@ 1 shreypatel  staff   378 Mar 22 19:12 count.s
+-rw-r--r--@ 1 shreypatel  staff   500 Mar 22 20:56 count_line_numbered.txt
+-rwxr-xr-x@ 1 shreypatel  staff   470 Mar 22 19:12 findtext.s
+-rw-r--r--@ 1 shreypatel  staff   631 Mar 22 19:12 findtext_line_numbered.txt
+-rw-r--r--@ 1 shreypatel  staff  1446 Mar 22 19:12 hamlet.txt
+-rwxr-xr-x  1 shreypatel  staff  2615 Mar 23 22:38 mu.s
+-rw-r--r--@ 1 shreypatel  staff  3238 Mar 23 22:43 mu_line_numbered.txt
+-rwxr-xr-x@ 1 shreypatel  staff   407 Mar 22 19:12 right.s
+-rw-r--r--@ 1 shreypatel  staff   547 Mar 22 19:12 right_line_numbered.txt
+-rw-r--r--  1 shreypatel  staff  5184 Mar 23 22:47 script_part1.txt
+-rw-r--r--  1 shreypatel  staff    43 Mar 23 22:47 script_part2.txt
+-rw-r--r--  1 shreypatel  staff     0 Mar 23 22:48 tempfile
+[1m[7m%[27m[1m[0m                                                                                                                                       ]7;file://Shreys-Laptop.local/Users/shreypatel/desktop/shreyansh_patel_h3[0m[27m[24m[Jshreypatel@Shreys-Laptop shreyansh_patel_h3 % [K[?2004h[7m./mu.s -f .s tempfile -r 5 4 3 -x 1.234 alpha -c *.s -r 3 7 23[27m[62D[27m.[27m/[27mm[27mu[27m.[27ms[27m [27m-[27mf[27m [27m.[27ms[27m [27mt[27me[27mm[27mp[27mf[27mi[27ml[27me[27m [27m-[27mr[27m [27m5[27m [27m4[27m [27m3[27m [27m-[27mx[27m [27m1[27m.[27m2[27m3[27m4[27m [27ma[27ml[27mp[27mh[27ma[27m [27m-[27mc[27m [27m*[27m.[27ms[27m [27m-[27mr[27m [27m3[27m [27m7[27m [27m2[27m 3[?2004l
+Written by Shreyansh Patel
+Running findtext.s with '.s' in 'tempfile'
+Written by Shreyansh Patel
+tempfile
+2:-rwxr-xr-x@ 1 shreypatel  staff   378 Mar 22 19:12 count.s
+4:-rwxr-xr-x@ 1 shreypatel  staff   470 Mar 22 19:12 findtext.s
+7:-rwxr-xr-x  1 shreypatel  staff  2615 Mar 23 22:38 mu.s
+9:-rwxr-xr-x@ 1 shreypatel  staff   407 Mar 22 19:12 right.s
+---
+Running right.s with sides 5 4 3
+Written by Shreyansh Patel
+5 4 3 is a right triangle
+---
+Error: Invalid argument - '-x'
+Error: Invalid parameter - '1.234'
+Error: Invalid parameter - 'alpha'
+---
+Running count.s on 'count.s'
+Written by Shreyansh Patel
+count.s
+378 characters
+49 words
+18 lines
+---
+Running count.s on 'findtext.s'
+Written by Shreyansh Patel
+findtext.s
+470 characters
+79 words
+23 lines
+---
+Running count.s on 'mu.s'
+Written by Shreyansh Patel
+mu.s
+2615 characters
+278 words
+89 lines
+---
+Running count.s on 'right.s'
+Written by Shreyansh Patel
+right.s
+407 characters
+89 words
+20 lines
+---
+Running right.s with sides 3 7 23
+Written by Shreyansh Patel
+3 7 23 is not a right triangle
+---
+[1m[7m%[27m[1m[0m                                                                                                                                       ]7;file://Shreys-Laptop.local/Users/shreypatel/desktop/shreyansh_patel_h3[0m[27m[24m[Jshreypatel@Shreys-Laptop shreyansh_patel_h3 % [K[?2004heexit[?2004l
+
+Saving session...
+...saving history...truncating history files...
+...completed.
+
+Script done on Sun Mar 23 22:48:37 2025

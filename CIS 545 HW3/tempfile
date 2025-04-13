@@ -1,0 +1,13 @@
+total 96
+-rwxr-xr-x@ 1 shreypatel  staff   378 Mar 22 19:12 count.s
+-rw-r--r--@ 1 shreypatel  staff   500 Mar 22 20:56 count_line_numbered.txt
+-rwxr-xr-x@ 1 shreypatel  staff   470 Mar 22 19:12 findtext.s
+-rw-r--r--@ 1 shreypatel  staff   631 Mar 22 19:12 findtext_line_numbered.txt
+-rw-r--r--@ 1 shreypatel  staff  1446 Mar 22 19:12 hamlet.txt
+-rwxr-xr-x  1 shreypatel  staff  2615 Mar 23 22:38 mu.s
+-rw-r--r--@ 1 shreypatel  staff  3238 Mar 23 22:43 mu_line_numbered.txt
+-rwxr-xr-x@ 1 shreypatel  staff   407 Mar 22 19:12 right.s
+-rw-r--r--@ 1 shreypatel  staff   547 Mar 22 19:12 right_line_numbered.txt
+-rw-r--r--  1 shreypatel  staff  5184 Mar 23 22:47 script_part1.txt
+-rw-r--r--  1 shreypatel  staff    43 Mar 23 22:47 script_part2.txt
+-rw-r--r--  1 shreypatel  staff     0 Mar 23 22:48 tempfile

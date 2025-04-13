@@ -1,0 +1,23 @@
+     1	#!/bin/csh
+     2	echo "Written by Shreyansh Patel"
+     3	
+     4	# Check if the correct number of arguments is provided
+     5	if ($#argv != 2) then
+     6	    echo "Usage: findtext.s <string> <filename>"
+     7	    exit 1
+     8	endif
+     9	
+    10	set keyword = $argv[1]
+    11	set filename = $argv[2]
+    12	
+    13	# Check if the file exists
+    14	if (! -e $filename) then
+    15	    echo "File not found: $filename"
+    16	    exit 1
+    17	endif
+    18	
+    19	# Print the filename
+    20	echo $filename
+    21	
+    22	# Use grep with -F to treat the keyword as a fixed string
+    23	grep -nF "$keyword" $filename

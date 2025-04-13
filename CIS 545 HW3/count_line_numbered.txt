@@ -1,0 +1,19 @@
+     1	#!/bin/csh
+     2	echo "Written by Shreyansh Patel"
+     3	if ($#argv < 1) then
+     4	    echo "Usage: count.s <filename(s)>"
+     5	    exit 1
+     6	endif
+     7	foreach file ($argv)
+     8	    if (! -e $file) then
+     9	        echo "$file not found"
+    10	    else
+    11	        echo $file
+    12	        set output = (`wc $file`)
+    13	        echo "$output[3] characters"
+    14	        echo "$output[2] words"
+    15	        echo "$output[1] lines"
+    16	    endif
+    17	end
+  
+

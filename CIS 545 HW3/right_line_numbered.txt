@@ -1,0 +1,20 @@
+     1	#!/bin/csh
+     2	echo "Written by Shreyansh Patel"
+     3	
+     4	if ($#argv != 3) then
+     5	    echo "Usage: right.s <side1> <side2> <side3>"
+     6	    exit 1
+     7	endif
+     8	@ a = $argv[1]
+     9	@ b = $argv[2]
+    10	@ c = $argv[3]
+    11	@ a2 = $a * $a
+    12	@ b2 = $b * $b
+    13	@ c2 = $c * $c
+    14	if (($a2 + $b2 == $c2) || ($a2 + $c2 == $b2) || ($b2 + $c2 == $a2)) then
+    15	    echo "$a $b $c is a right triangle"
+    16	else
+    17	    echo "$a $b $c is not a right triangle"
+    18	endif
+    19	
+    20	#STAND_ALONE
